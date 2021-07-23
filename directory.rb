@@ -3,17 +3,12 @@
 def input_students
   puts "Please enter the names of the students"
   puts "To finish, just hit return twice"
-  
-  name = gets.delete("\n")
+  name = gets.chomp
 
   while !name.empty? do
     @students << {name: name, cohort: :november}
-    if @students.length == 1 
-      puts "Our first student" 
-    else
-      puts "Now we have #{@students.count} students"
-    end
-    name = gets.delete("\n")
+    puts "Now we have #{@students.count} student#{"s" unless @students.count == 1}"
+    name = gets.chomp
   end
 end
 
@@ -24,19 +19,12 @@ end
 
 def print_students_list
   @students.each_with_index do |student, index|
-    puts "#{index}. #{student[:name]} (#{student[:cohort]} cohort)"
+    puts "#{index+1}. #{student[:name]} (#{student[:cohort]} cohort)"
   end
 end
 
 def print_footer
-  case @students.length
-  when 0
-    puts "We have no students"
-  when 1 
-    puts "We have 1 great student"
-  else
-    puts "Overall, we have #{@students.count} great students"
-  end
+    puts "Overall, we have #{@students.count} great student#{"s" unless @students.count == 1}"
 end 
 
 def print_menu
@@ -54,7 +42,7 @@ end
 def process(menu_item)
   case menu_item
   when "1"
-    students = input_students
+    input_students
   when "2"
     show_students
   when "9"
@@ -65,7 +53,6 @@ def process(menu_item)
 end
 
 def interactive_menu
-  @students = []
   loop do
     print_menu
     process(gets.chomp)
