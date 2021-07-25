@@ -85,9 +85,9 @@ def load_students_at_startup
   end
 end
 
-def load_students(filename
-  file = File.open(filename, "r").readlines.each do |line|
-    name, cohort = line.chomp.split(',')
+def load_students(filename = @filename)
+  CSV.foreach(filename) do |line|
+    name, cohort = line
     add_students(name, cohort)
   end
   puts "Loaded #{@students.count} from #{filename}"
